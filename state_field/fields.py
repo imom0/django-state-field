@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-
 from django.db.models.fields import CharField
+
+from state_field.exceptions import StateFieldError
 
 
 class StateDescriptor(object):
@@ -15,9 +14,15 @@ class StateDescriptor(object):
         return instance.__dict__[self.field.name]
 
     def __set__(self, instance, value):
+        if value != 'value_for_test':
+            raise StateFieldError('Set state to %s is not allowed.' % value)
         instance.__dict__[self.field.name] = value
 
 
 class StateField(CharField):
 
-    description = u'StateField'
+    description = 'StateField'
+
+    def contribute_to_class(self, cls, name):
+        super(StateField, self).contribute_to_class(cls, name)
+        setattr(cls, self.name, StateDescriptor(self))
