@@ -10,7 +10,7 @@ class StateDescriptor(object):
 
     def __get__(self, instance, instance_type=None):
         if instance is None:
-            raise AttributeError('State must be accessed via instance')
+            raise AttributeError('State must be accessed via instance.')
         return instance.__dict__[self.field.name]
 
     def __set__(self, instance, value):
@@ -22,6 +22,13 @@ class StateDescriptor(object):
 class StateField(CharField):
 
     description = 'StateField'
+
+    def __init__(self, *args, **kwargs):
+        # FIXME: use validators
+        if ('state_flow' not in kwargs or
+                not isinstance(kwargs['state_flow'], dict)):
+            raise StateFieldError('Must provide `state_flow` for StateField.')
+        super(StateField, self).__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
         super(StateField, self).contribute_to_class(cls, name)
