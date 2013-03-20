@@ -45,7 +45,7 @@ Define your model:
 
 Change state in your app:
 
-    >>> book = Book.objects.create(default='default_state')
+    >>> book = Book.objects.create(state='default_state')
     >>> book.state = 'next_state' # This is allowed
     >>> book.state = 'next_state' # Raises an exception
     >>> book.state = 'state_not_in_flow' # Raises an exception, too
