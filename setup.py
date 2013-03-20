@@ -19,9 +19,9 @@ setup(
     install_requires=install_requires,
     include_package_data=True,
     classifiers=[
+        'Development Status :: 3 - Alpha',
         'Framework :: Django',
-        'Intented Audience :: Developers',
-        'Intented Audience :: System Administrators',
+        'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Topic :: Software Development'
     ]
