@@ -23,3 +23,9 @@ class StateFieldTest(TestCase):
     def test_create_not_default_value(self):
         book = Book.objects.create(state='next')
         self.assertEqual(book.state, 'next')
+
+    def test_change_state_success(self):
+        book = Book.objects.create()
+        book.state = 'next'
+        book.save()
+        self.assertEqual(book.state, 'next')
