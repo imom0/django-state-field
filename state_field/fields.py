@@ -30,6 +30,12 @@ class StateDescriptor(object):
 
 
 class StateField(CharField):
+    """Custom field for storing state,
+    Currently, StateField inherits from CharField, that means you can not
+    set instance.state to 1 or other python objects if you define state a
+    StateField, strings only now.You should pass state_flow argument to
+    StateField, or an exception will be raised.
+    """
 
     description = 'StateField'
 
