@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.db import models
 
 from state_field.fields import StateField
+from state_field.exceptions import StateFieldError
 
 flow = {
     'default_value': ['next', 'default_value', 'prev'],
@@ -29,3 +30,11 @@ class StateFieldTest(TestCase):
         book.state = 'next'
         book.save()
         self.assertEqual(book.state, 'next')
+
+    def test_change_state_fail(self):
+        book = Book.objects.create(state='next')
+
+        def set_not_allowed_value():
+            book.state = 'prev'
+
+        self.assertRaises(StateFieldError, set_not_allowed_value)
