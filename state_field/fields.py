@@ -27,6 +27,12 @@ class StateDescriptor(object):
         if current_value is not None and value not in allowed_states:
             raise StateFieldError('Set state to %s is not allowed.' % value)
         self._cache = value
+        self.send_signal(current_value, value)
+
+    def send_signal(self, old_state, state):
+        attrname = 'state_%s_to_%s' % (old_state, state)
+        if hasattr(self, attrname):
+            getattr(self, attrname)()
 
 
 class StateField(CharField):
@@ -37,6 +43,7 @@ class StateField(CharField):
     StateField, or an exception will be raised.
     """
 
+    descriptor = StateDescriptor
     description = 'StateField'
 
     def __init__(self, *args, **kwargs):
@@ -49,4 +56,4 @@ class StateField(CharField):
 
     def contribute_to_class(self, cls, name):
         super(StateField, self).contribute_to_class(cls, name)
-        setattr(cls, self.name, StateDescriptor(self, self.state_flow))
+        setattr(cls, self.name, self.descriptor(self, self.state_flow))
