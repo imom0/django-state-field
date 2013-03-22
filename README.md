@@ -5,8 +5,8 @@ django-state-field
 
 django-state-field is a reusable Django app, providing a custom field called StateField for changing states. It is a simple state machine for your app to limit state changes.
 
-Install
--------
+Installation
+------------
 
 Install django-state-field with pip:
 
@@ -16,8 +16,8 @@ or download tarball source file from github and extract it:
 
     python setup.py install
     
-Configure
----------
+Configuration
+-------------
 
 Add `state_field` to your `settings.py`'s `INSTALLED_APPS`:
 
@@ -27,8 +27,8 @@ Add `state_field` to your `settings.py`'s `INSTALLED_APPS`:
         ...
     )
 
-Use
----
+Usage
+-----
 
 Define your model:
 
@@ -43,9 +43,16 @@ Define your model:
     class Book(models.Model):
         state = StateField(max_length=20, state_flow=flow)
 
-Change state in your app:
+Change states in your app:
 
     >>> book = Book.objects.create(state='default_state')
-    >>> book.state = 'next_state' # This is allowed
-    >>> book.state = 'next_state' # Raises an exception
-    >>> book.state = 'state_not_in_flow' # Raises an exception, too
+
+    # This is allowed
+    >>> book.state = 'next_state'
+
+    # Raises an exception, next_state can not be changed to next_state
+    # previous_state and default_state are allowed
+    >>> book.state = 'next_state'
+
+    # Raises an exception, too
+    >>> book.state = 'state_not_in_flow'
