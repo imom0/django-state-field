@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.db import models
 
-from state_field.fields import StateField
+from state_field.fields import StateField, StateDescriptor
 from state_field.exceptions import StateFieldError
 
 flow = {
@@ -13,6 +13,26 @@ flow = {
 class Book(models.Model):
 
     state = StateField(max_length=20, state_flow=flow, default='default_value')
+
+#TODO: better way to test signals sent or not
+
+myflow = {'foo': ['bar']}
+
+TEST_VALUE = 'foo'
+
+
+class MyStateDescriptor(StateDescriptor):
+    def state_foo_to_bar(self):
+        global TEST_VALUE
+        TEST_VALUE = 'bar'
+
+
+class MyStateField(StateField):
+    descriptor = MyStateDescriptor
+
+
+class MyBook(models.Model):
+    state = MyStateField(max_length=20, state_flow=myflow, default='foo')
 
 
 class StateFieldTest(TestCase):
@@ -38,3 +58,13 @@ class StateFieldTest(TestCase):
             book.state = 'prev'
 
         self.assertRaises(StateFieldError, set_not_allowed_value)
+
+
+class StateDescriptorTest(TestCase):
+
+    def test_send_signal(self):
+
+        book = MyBook.objects.create()
+        self.assertEqual(TEST_VALUE, 'foo')
+        book.state = 'bar'
+        self.assertEqual(TEST_VALUE, 'bar')
