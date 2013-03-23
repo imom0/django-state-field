@@ -8,7 +8,6 @@ from state_field.exceptions import StateFieldError
 
 
 class StateDescriptor(object):
-    _cache = None
 
     def __init__(self, field, flow):
         self.field = field
@@ -17,16 +16,17 @@ class StateDescriptor(object):
     def __get__(self, instance, instance_type=None):
         if instance is None:
             raise AttributeError('State must be accessed via instance.')
-        logger.debug('** call get **: %s' % (self._cache,))
-        return self._cache
+        current_state = instance.__dict__.get(self.field.name, None)
+        logger.debug('** call get **: %s' % (current_state,))
+        return current_state
 
     def __set__(self, instance, value):
-        current_value = self._cache
+        current_value = self.__get__(instance, instance.__class__)
         logger.debug('** call set **: %s' % (current_value,))
         allowed_states = self.flow.get(current_value, [])
         if current_value is not None and value not in allowed_states:
             raise StateFieldError('Set state to %s is not allowed.' % value)
-        self._cache = value
+        instance.__dict__[self.field.name] = value
         self.send_signal(current_value, value)
 
     def send_signal(self, old_state, state):
