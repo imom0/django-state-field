@@ -20,17 +20,17 @@ class StateDescriptor(object):
         logger.debug('** call get **: %s' % (current_state,))
         return current_state
 
-    def __set__(self, instance, value):
-        current_value = self.__get__(instance, instance.__class__)
-        logger.debug('** call set **: %s' % (current_value,))
-        allowed_states = self.flow.get(current_value, [])
-        if current_value is not None and value not in allowed_states:
-            raise StateFieldError('Set state to %s is not allowed.' % value)
-        instance.__dict__[self.field.name] = value
-        self.send_signal(current_value, value)
+    def __set__(self, instance, state):
+        current_state = self.__get__(instance, instance.__class__)
+        logger.debug('** call set **: %s' % (current_state,))
+        allowed_states = self.flow.get(current_state, [])
+        if current_state is not None and state not in allowed_states:
+            raise StateFieldError('Set state to %s is not allowed.' % state)
+        instance.__dict__[self.field.name] = state
+        self.send_signal(current_state, state)
 
-    def send_signal(self, old_state, state):
-        attrname = 'state_%s_to_%s' % (old_state, state)
+    def send_signal(self, older_state, state):
+        attrname = 'state_%s_to_%s' % (older_state, state)
         if hasattr(self, attrname):
             getattr(self, attrname)()
 
