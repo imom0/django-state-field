@@ -9,9 +9,9 @@ from state_field.exceptions import StateFieldError
 
 class StateDescriptor(object):
 
-    def __init__(self, field, flow):
+    def __init__(self, field):
         self.field = field
-        self.flow = flow
+        self.flow = field.state_flow
 
     def __get__(self, instance, instance_type=None):
         if instance is None:
@@ -31,8 +31,8 @@ class StateDescriptor(object):
 
     def send_signal(self, older_state, state):
         attrname = 'state_%s_to_%s' % (older_state, state)
-        if hasattr(self, attrname):
-            getattr(self, attrname)()
+        if hasattr(self.field, attrname):
+            getattr(self.field, attrname)()
 
 
 class StateField(CharField):
@@ -56,4 +56,4 @@ class StateField(CharField):
 
     def contribute_to_class(self, cls, name):
         super(StateField, self).contribute_to_class(cls, name)
-        setattr(cls, self.name, self.descriptor(self, self.state_flow))
+        setattr(cls, self.name, self.descriptor(self))

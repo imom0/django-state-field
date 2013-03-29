@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.db import models
 
-from state_field.fields import StateField, StateDescriptor
+from state_field.fields import StateField
 from state_field.exceptions import StateFieldError
 
 flow = {
@@ -21,14 +21,10 @@ myflow = {'foo': ['bar']}
 TEST_VALUE = 'foo'
 
 
-class MyStateDescriptor(StateDescriptor):
+class MyStateField(StateField):
     def state_foo_to_bar(self):
         global TEST_VALUE
         TEST_VALUE = 'bar'
-
-
-class MyStateField(StateField):
-    descriptor = MyStateDescriptor
 
 
 class MyBook(models.Model):
