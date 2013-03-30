@@ -14,17 +14,13 @@ class Book(models.Model):
 
     state = StateField(max_length=20, state_flow=flow, default='default_value')
 
-#TODO: better way to test signals sent or not
-
 myflow = {'foo': ['bar']}
-
-TEST_VALUE = 'foo'
 
 
 class MyStateField(StateField):
+
     def state_foo_to_bar(self):
-        global TEST_VALUE
-        TEST_VALUE = 'bar'
+        setattr(self.model, 'foobar', 'foobar')
 
 
 class MyBook(models.Model):
@@ -63,6 +59,7 @@ class StateDescriptorTest(TestCase):
     def test_send_signal(self):
 
         book = MyBook.objects.create()
-        self.assertEqual(TEST_VALUE, 'foo')
+        self.assertEqual(hasattr(book, 'foobar'), False)
         book.state = 'bar'
-        self.assertEqual(TEST_VALUE, 'bar')
+        self.assertEqual((hasattr(book, 'foobar') and
+                          book.foobar == 'foobar'), True)
