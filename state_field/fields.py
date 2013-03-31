@@ -32,7 +32,10 @@ class StateDescriptor(object):
     def send_signal(self, older_state, state):
         attrname = 'state_%s_to_%s' % (older_state, state)
         if hasattr(self.field, attrname):
-            getattr(self.field, attrname)()
+            try:
+                getattr(self.field, attrname)()
+            except:
+                logger.error('Error in hooks.', exc_info=True)
 
 
 class StateField(CharField):
