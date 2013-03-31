@@ -56,3 +56,12 @@ Change states in your app:
 
     # Raises an exception, too
     >>> book.state = 'state_not_in_flow'
+
+Hooks:
+
+    class Book(models.Model):
+        state = StateField(max_length=20, state_flow=flow)
+
+        # this method will be called when state changes from foo to bar
+        def state_foo_to_bar(self):
+            pass
