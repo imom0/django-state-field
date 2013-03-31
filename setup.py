@@ -6,7 +6,7 @@ install_requires = [
 
 setup(
     name='django-state-field',
-    version='0.2',
+    version='0.3',
     description='Django custom field for changing states',
     author='iMom0',
     author_email='mobeiheart@gmail.com',
