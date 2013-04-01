@@ -19,7 +19,7 @@ myflow = {'foo': ['bar']}
 
 class MyStateField(StateField):
 
-    def state_foo_to_bar(self):
+    def foo_to_bar(self):
         setattr(self.model, 'foobar', 'foobar')
         raise StateFieldError('This state hook has an error.')
 

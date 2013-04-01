@@ -16,7 +16,8 @@ if not settings.configured:
             'django.contrib.auth',
             'django.contrib.contenttypes',
             'state_field',
-        ]
+        ],
+        STATE_FIELD_HOOK_FORMAT='%s_to_%s',
     )
 
 from django.test.simple import DjangoTestSuiteRunner
