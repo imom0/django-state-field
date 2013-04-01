@@ -2,9 +2,12 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+from django.conf import settings
 from django.db.models.fields import CharField
 
 from state_field.exceptions import StateFieldError
+
+HOOK_FORMAT = getattr(settings, 'STATE_FIELD_HOOK_FORMAT', 'state_%s_to_%s')
 
 
 class StateDescriptor(object):
@@ -30,7 +33,7 @@ class StateDescriptor(object):
         self.send_signal(current_state, state)
 
     def send_signal(self, older_state, state):
-        attrname = 'state_%s_to_%s' % (older_state, state)
+        attrname = HOOK_FORMAT % (older_state, state)
         if hasattr(self.field, attrname):
             try:
                 getattr(self.field, attrname)()
