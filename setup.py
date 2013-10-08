@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-from .state_field import __version__
+from state_field import __version__
 
 install_requires = [
     'Django>=1.4.2',
