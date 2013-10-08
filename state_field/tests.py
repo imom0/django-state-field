@@ -1,3 +1,4 @@
+from mock import patch
 from django.test import TestCase
 from django.db import models
 
@@ -20,8 +21,7 @@ myflow = {'foo': ['bar']}
 class MyStateField(StateField):
 
     def foo_to_bar(self):
-        setattr(self.model, 'foobar', 'foobar')
-        raise StateFieldError('This state hook has an error.')
+        pass
 
 
 class MyBook(models.Model):
@@ -55,12 +55,11 @@ class StateFieldTest(TestCase):
         self.assertRaises(StateFieldError, set_not_allowed_value)
 
 
+@patch.object(MyStateField, 'foo_to_bar')
 class StateDescriptorTest(TestCase):
 
-    def test_send_signal(self):
-
+    def test_hook(self, mock_method):
         book = MyBook.objects.create()
-        self.assertEqual(hasattr(book, 'foobar'), False)
+        self.assertFalse(mock_method.called)
         book.state = 'bar'
-        self.assertEqual((hasattr(book, 'foobar') and
-                          book.foobar == 'foobar'), True)
+        self.assertTrue(mock_method.called)
