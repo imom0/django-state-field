@@ -30,9 +30,9 @@ class StateDescriptor(object):
         if current_state is not None and state not in allowed_states:
             raise StateFieldError('Set state to %s is not allowed.' % state)
         instance.__dict__[self.field.name] = state
-        self.send_signal(current_state, state)
+        self.call_hook(current_state, state)
 
-    def send_signal(self, older_state, state):
+    def call_hook(self, older_state, state):
         attrname = HOOK_FORMAT % (older_state, state)
         if hasattr(self.field, attrname):
             try:
