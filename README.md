@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/imom0/django-state-field.png?label=ready)](https://waffle.io/imom0/django-state-field)  
 django-state-field 
 ==================
 
