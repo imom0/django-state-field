@@ -1,8 +1,8 @@
-[![Stories in Ready](https://badge.waffle.io/imom0/django-state-field.png?label=ready)](https://waffle.io/imom0/django-state-field)  
 django-state-field 
 ==================
 
 [![Build Status](https://api.travis-ci.org/imom0/django-state-field.png)](https://travis-ci.org/imom0/django-state-field)
+[![Stories in Ready](https://badge.waffle.io/imom0/django-state-field.png?label=ready)](https://waffle.io/imom0/django-state-field)
 
 django-state-field is a reusable Django app, providing a custom field called StateField for changing states. It is a simple state machine for your app to limit state changes.
 
