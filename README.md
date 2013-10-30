@@ -1,7 +1,7 @@
 django-state-field 
 ==================
 
-
+[![Build Status](https://drone.io/github.com/imom0/django-state-field/status.png)](https://drone.io/github.com/imom0/django-state-field/latest)
 [![Build Status](https://api.travis-ci.org/imom0/django-state-field.png)](https://travis-ci.org/imom0/django-state-field)
 [![Stories in Ready](https://badge.waffle.io/imom0/django-state-field.png?label=ready)](https://waffle.io/imom0/django-state-field)
 
