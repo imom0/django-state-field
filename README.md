@@ -67,3 +67,7 @@ Hooks:
         # this method will be called when state changes from foo to bar
         def state_foo_to_bar(self):
             pass
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/imom0/django-state-field/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
