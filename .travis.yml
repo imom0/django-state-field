@@ -4,11 +4,19 @@ python:
   - "2.7"
   - "3.3"
 env:
-  - DJANGO=1.4.2
+  - DJANGO=1.4
   - DJANGO=1.5
   - DJANGO=1.6
+matrix:
+  exclude:
+    - python: "3.3"
+      env: DJANGO=Django==1.4
 install:
   - pip install -q Django==$DJANGO --use-mirrors
   - pip install -q -e . --use-mirrors
+  - pip install coverage coveralls --use-mirrors
 script:
-  - python setup.py test
+  - coverage run setup.py test
+after_success:
+  - coverage report state_field/*.py
+  - coveralls
