@@ -1,9 +1,9 @@
 django-state-field 
 ==================
 
-[![Build Status](https://drone.io/github.com/imom0/django-state-field/status.png)](https://drone.io/github.com/imom0/django-state-field/latest)
+[![Coverage Status](https://coveralls.io/repos/imom0/django-state-field/badge.png)](https://coveralls.io/r/imom0/django-state-field)
 [![Build Status](https://api.travis-ci.org/imom0/django-state-field.png)](https://travis-ci.org/imom0/django-state-field)
-[![Stories in Ready](https://badge.waffle.io/imom0/django-state-field.png?label=ready)](https://waffle.io/imom0/django-state-field)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/imom0/django-state-field/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 django-state-field is a reusable Django app, providing a custom field called StateField for changing states. It is a simple state machine for your app to limit state changes.
 
@@ -67,7 +67,3 @@ Hooks:
         # this method will be called when state changes from foo to bar
         def state_foo_to_bar(self):
             pass
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/imom0/django-state-field/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
