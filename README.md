@@ -1,7 +1,6 @@
 django-state-field 
 ==================
 
-[![Coverage Status](https://coveralls.io/repos/imom0/django-state-field/badge.png)](https://coveralls.io/r/imom0/django-state-field)
 [![Build Status](https://api.travis-ci.org/imom0/django-state-field.png)](https://travis-ci.org/imom0/django-state-field)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/imom0/django-state-field/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
